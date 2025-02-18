@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Đăng Ký Sinh Viên</title>
+    <style>
+      .error {
+        color: red;
+      }
+    </style>
+    <script>
+      function EmailHopLe() {
+        let email = document.getElementById("email").value;
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          alert("Email không hợp lệ!");
+          return false;
+        }
+        return true;
+      }
+
+      function TuoiHopLe() {
+        let age = document.getElementById("age").value;
+        if (age <= 18) {
+          alert("Tuổi phải lớn hơn 18!");
+          return false;
+        }
+        return true;
+      }
+
+      function NgayDangKyHopLe() {
+        let NgayDangKy = new Date(
+          document.getElementById("registrationDate").value
+        );
+        let NgayHienTai = new Date();
+        NgayHienTai.setDate(NgayHienTai.getDate() + 20);
+        if (NgayDangKy <= NgayHienTai) {
+          alert("Ngày đăng ký phải sau ngày hiện tại ít nhất 20 ngày!");
+          return false;
+        }
+        return true;
+      }
+
+      function HinhAnhHopLe() {
+        let imageFile = document.getElementById("photo").value;
+        let allowedExtensions = /(\.png|\.jpeg)$/i;
+        if (!allowedExtensions.test(imageFile)) {
+          alert(
+            "Ảnh không hợp lệ! Vui lòng chọn file với đuôi .PNG hoặc .JPEG."
+          );
+          return false;
+        }
+        return true;
+      }
+
+      function validateForm() {
+        if (
+          EmailHopLe() &&
+          TuoiHopLe() &&
+          NgayDangKyHopLe() &&
+          HinhAnhHopLe()
+        ) {
+          alert("Form hợp lệ!");
+          return true;
+        }
+        alert("Có lỗi trong form. Vui lòng kiểm tra lại.");
+        return false;
+      }
+    </script>
+  </head>
+  <body>
+    <h2>Form Đăng Ký Sinh Viên</h2>
+    <form name="studentForm" onsubmit="return validateForm()">
+      c
+      <input type="text" id="studentId" name="studentId" required /><br /><br />
+
+      <label for="name">Họ Tên Sinh Viên:</label>
+      <input type="text" id="name" name="name" required /><br /><br />
+
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        oninput="EmailHopLe()"
+        required
+      /><br /><br />
+
+      <label for="age">Tuổi:</label>
+      <input
+        type="number"
+        id="age"
+        name="age"
+        oninput="TuoiHopLe()"
+        min="1"
+        required
+      /><br /><br />
+
+      <label for="registrationDate">Ngày Đăng Ký:</label>
+      <input
+        type="date"
+        id="registrationDate"
+        name="registrationDate"
+        onchange="NgayDangKyHopLe()"
+        required
+      /><br /><br />
+
+      <label for="photo">Ảnh:</label>
+      <input
+        type="file"
+        id="photo"
+        name="photo"
+        accept=".png, .jpeg"
+        onchange="HinhAnhHopLe()"
+        required
+      /><br /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
